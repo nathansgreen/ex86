@@ -2,7 +2,7 @@
 #include "config.h"
 
 int main(int argc, char *argv[]) {
-    ex86_context_config config = {
+    ex86_config config = {
         .memory_size = 1024
     };
 

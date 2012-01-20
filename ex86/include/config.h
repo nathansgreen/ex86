@@ -4,9 +4,9 @@
 #include <stddef.h>
 
 /** The configuration object for ex86. */
-typedef struct ex86_context_config {
+typedef struct ex86_config {
     /** How much memory to allocate for the interpreter. */
     size_t memory_size;
-} ex86_context_config;
+} ex86_config;
 
 #endif

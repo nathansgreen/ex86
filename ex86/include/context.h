@@ -159,7 +159,7 @@ typedef struct ex86_context {
 } ex86_context;
 
 /** Allocate a new ex86 context. */
-ex86_context *ex86_context_new(ex86_context_config *);
+ex86_context *ex86_context_new(ex86_config *);
 
 /** Destroy the ex86 context. */
 void ex86_context_destroy(ex86_context *interp);

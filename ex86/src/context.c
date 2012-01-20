@@ -3,7 +3,7 @@
 
 #include "context.h"
 
-ex86_context *ex86_context_new(ex86_context_config *config) {
+ex86_context *ex86_context_new(ex86_config *config) {
     /* Conveniently, we don't have to care about initializing the registers to
        zero. */
     ex86_context *ctx = (ex86_context *)malloc(sizeof(ex86_context));

@@ -4,7 +4,7 @@
 
 #include "context.h"
 
-ex86_interpreter *ex86_interpreter_new(ex86_context_config *config) {
+ex86_interpreter *ex86_interpreter_new(ex86_config *config) {
     ex86_interpreter *interp = (ex86_interpreter *)malloc(sizeof(ex86_interpreter));
     interp->ctx = ex86_context_new(config);
     return interp;
