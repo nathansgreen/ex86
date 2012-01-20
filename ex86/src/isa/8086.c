@@ -164,7 +164,7 @@ EX86_LOOKUP_INSTRUCTION(lookup) {
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_MEMORY_64, EX86_TARGET_MEMORY_64, EX86_TARGET_NONE): return &mov64_m_m;
             }
     }
-    return NULL;
+    return 0;
 }
 
 void ex86_isa_register_8086(ex86_interpreter *interp) {

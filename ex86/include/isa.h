@@ -5,8 +5,6 @@
 
 #include "context.h"
 
-#define NULL 0
-
 /**
  * This enumeration specifies the type a target is and also the type an
  * instruction parameter is allowed to be.

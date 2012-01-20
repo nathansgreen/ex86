@@ -166,6 +166,6 @@ ex86_context *ex86_context_new();
 /**
  * Destroy the ex86 context context.
  */
-void ex86_context_destory(ex86_context *interp);
+void ex86_context_destroy(ex86_context *interp);
 
 #endif

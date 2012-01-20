@@ -9,6 +9,6 @@ ex86_context *ex86_context_new() {
     return (ex86_context *)malloc(sizeof(ex86_context));
 }
 
-void ex86_context_destory(ex86_context *interp) {
+void ex86_context_destroy(ex86_context *interp) {
     free(interp);
 }

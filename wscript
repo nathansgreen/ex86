@@ -12,5 +12,5 @@ def configure(conf):
     conf.env.append_value('CFLAGS', '-std=c99')
     
 def build(bld):
-    bld.recurse('libex86')
+    bld.recurse('ex86')
     bld.recurse('iex86')
