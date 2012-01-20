@@ -6,10 +6,11 @@
 #include "context.h"
 #include "error.h"
 
-/**
- * This enumeration specifies the type a target is and also the type an
- * instruction parameter is allowed to be.
- */
+/** The ISA ID type. */
+typedef int ex86_isa_id;
+
+/** This enumeration specifies the type a target is and also the type an
+    instruction parameter is allowed to be. */
 typedef enum ex86_instruction_param_type {
     /** Nothing (i.e. should be blank). */
     EX86_TARGET_NONE            = 0x0,
@@ -57,9 +58,7 @@ typedef int ex86_label;
 /** The type signature type. */
 typedef int64_t ex86_type_signature;
 
-/**
- * A parameter to a basic instruction.
- */
+/** A parameter to a basic instruction. */
 typedef union ex86_instruction_param {
     /** 16-bit register. */
     ex86_register_16 r16;
@@ -103,14 +102,10 @@ typedef union ex86_instruction_param {
 /** The opcode type. */
 typedef int ex86_opcode;
 
-/**
- * The function type for an instruction.
- */
+/** The function type for an instruction. */
 typedef void ex86_instruction_func(EX86_INSTRUCTION_PARAMS);
 
-/**
- * The function type for the lookup instruction.
- */
+/** The function type for the lookup instruction. */
 typedef ex86_instruction_func *ex86_lookup_instruction_func(
     ex86_type_signature sig,
     ex86_opcode op,
@@ -128,6 +123,7 @@ static void FUNC(EX86_INSTRUCTION_PARAMS)
     (SRC1_TYPE << 8) | \
     (DEST_TYPE)
 
+/** Create a instruction lookup function. */
 #define EX86_LOOKUP_INSTRUCTION(FUNC) \
 static ex86_instruction_func *FUNC( \
     ex86_type_signature sig, \

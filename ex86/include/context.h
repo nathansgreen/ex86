@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#include "config.h"
+
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
     /** A 16-bit register value. */
     typedef int16_t ex86_register_value_16;
@@ -120,9 +122,7 @@ typedef int32_t *ex86_pointer_32;
 /** A pointer to a 64-bit value in memory. */
 typedef int64_t *ex86_pointer_64;
 
-/**
- * The ex86 execution context.
- */
+/** The ex86 execution context. */
 typedef struct ex86_context {
     /** The accumulator register. */
     ex86_register_value ax;
@@ -158,14 +158,10 @@ typedef struct ex86_context {
     void *memory;
 } ex86_context;
 
-/**
- * Allocate a new ex86 context context.
- */
-ex86_context *ex86_context_new();
+/** Allocate a new ex86 context. */
+ex86_context *ex86_context_new(ex86_context_config *);
 
-/**
- * Destroy the ex86 context context.
- */
+/** Destroy the ex86 context. */
 void ex86_context_destroy(ex86_context *interp);
 
 #endif
