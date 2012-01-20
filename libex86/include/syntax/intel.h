@@ -7,7 +7,7 @@
  * Intel syntax parser.
  */
 ex86_parser_dispatch_table ex86_intel_parser_dispatch = {
-
+    0
 };
 
 #endif
