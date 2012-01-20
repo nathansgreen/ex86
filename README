@@ -1,0 +1,6 @@
+ex86 - a(n aiming to be) fully compliant x86 assembly interpreter
+=================================================================
+
+ex86 is an interpreter for the x86 ISA, aiming to be able to interactively
+interpret assembly on-the-fly and support most, if not all, extensions to the
+x86 architecture.
