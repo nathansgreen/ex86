@@ -3,10 +3,10 @@
 
 #include "parser.h"
 
-/*
+/**
  * Intel syntax parser.
  */
-static ex86_parser_dispatch_table ex86_intel_parser_dispatch = {
+ex86_parser_dispatch_table ex86_intel_parser_dispatch = {
 
 };
 

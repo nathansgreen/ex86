@@ -8,34 +8,34 @@
  * The ex86 context context.
  */
 typedef struct ex86_context {
-    /// The accumulator register.
+    /** The accumulator register. */
     ex86_register ax;
 
-    /// The base register.
+    /** The base register. */
     ex86_register bx;
 
-    /// The counter register.
+    /** The counter register. */
     ex86_register cx;
 
-    /// The data register.
+    /** The data register. */
     ex86_register dx;
 
-    /// The source index register.
+    /** The source index register. */
     ex86_register si;
 
-    /// The destination register.
+    /** The destination register. */
     ex86_register di;
 
-    /// The base pointer register.
+    /** The base pointer register. */
     ex86_register bp;
 
-    /// The stack pointer register.
+    /** The stack pointer register. */
     ex86_register sp;
 
-    /// The instruction pointer register.
+    /** The instruction pointer register. */
     ex86_register ip;
 
-    /// The FLAGS register.
+    /** The FLAGS register. */
     ex86_flags flags;
 } ex86_context;
 

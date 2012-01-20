@@ -1,11 +1,11 @@
 #ifndef REGISTER_H_
 #define REGISTER_H_
 
-#include "types.h"
+#include <stdint.h>
 
-typedef uint_16t ex86_register_16;
-typedef uint_32t ex86_register_32;
-typedef uint_64t ex86_register_64;
+typedef int16_t ex86_register_16;
+typedef int32_t ex86_register_32;
+typedef int64_t ex86_register_64;
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE == 64
     typedef ex86_register_64 ex86_register;

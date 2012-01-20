@@ -1,130 +1,224 @@
+#include <stdint.h>
+
+#include "isa.h"
 #include "context.h"
 #include "register.h"
 #include "memory.h"
-#include "types.h"
+
+#include "isa/8086.h"
 
 /**
- * movb register, register
+ * mov16 register, register
  */
-static void movb_r_r(ex86_register_16 *src, ex86_register_16 *dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov16_r_r,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_NONE
+) {
+    *dest.r16 = *src1.r16;
 }
 
 /**
- * movb immediate, register
+ * mov16 register, immediate
  */
-static void movb_i_r(uint_16t src, ex86_register_16 *dest) {
-    *dest = src;
+EX86_SPECIFY_INSTRUCTION(
+    mov16_r_i,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_IMMEDIATE,
+    EX86_TARGET_NONE
+) {
+    *dest.r16 = src1.i16;
 }
 
 /**
- * movb immediate, memory
+ * mov16 memory, immediate
  */
-static void movb_i_m(uint_16t src, ex86_pointer_16 dest) {
-    *dest = src;
+EX86_SPECIFY_INSTRUCTION(
+    mov16_m_i,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_IMMEDIATE,
+    EX86_TARGET_NONE
+) {
+    *dest.p16 = src1.i16;
 }
 
 /**
- * movb memory, register
+ * mov16 register, memory
  */
-static void movb_m_r(ex86_pointer_16 src, ex86_register_16 *dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov16_r_m,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_NONE
+) {
+    *dest.r16 = *src1.p16;
 }
 
 /**
- * movb register, memory
+ * mov16 memory, register
  */
-static void movb_r_m(ex86_register_16 *src, ex86_pointer_16 dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov16_m_r,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_NONE
+) {
+    *dest.p16 = *src1.r16;
 }
 
 /**
- * movb memory, memory
+ * mov16 memory, memory
  */
-static void movb_m_m(ex86_pointer_16 src, ex86_pointer_16 dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov16_m_m,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_NONE
+) {
+    *dest.p16 = *src1.p16;
 }
 
 /**
- * movl register, register
+ * mov32 register, register
  */
-static void movl_r_r(ex86_register_32 *src, ex86_register_32 *dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov32_r_r,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_NONE
+) {
+    *dest.r32 = *src1.r32;
 }
 
 /**
- * movl immediate, register
+ * mov32 register, immediate
  */
-static void movl_i_r(uint_32t src, ex86_register_32 *dest) {
-    *dest = src;
+EX86_SPECIFY_INSTRUCTION(
+    mov32_r_i,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_IMMEDIATE,
+    EX86_TARGET_NONE
+) {
+    *dest.r32 = src1.i32;
 }
 
 /**
- * movl immediate, memory
+ * mov32 memory, immediate
  */
-static void movl_i_m(uint_16t src, ex86_pointer_32 dest) {
-    *dest = src;
+EX86_SPECIFY_INSTRUCTION(
+    mov32_m_i,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_IMMEDIATE,
+    EX86_TARGET_NONE
+) {
+    *dest.p32 = src1.i32;
 }
 
 /**
- * movl memory, register
+ * mov32 register, memory
  */
-static void movl_m_r(ex86_pointer_32 src, ex86_register_32 *dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov32_r_m,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_NONE
+) {
+    *dest.r32 = *src1.p32;
 }
 
 /**
- * movl register, memory
+ * mov32 memory, register
  */
-static void movl_r_m(ex86_register_32 *src, ex86_pointer_32 dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov32_m_r,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_NONE
+) {
+    *dest.p32 = *src1.r32;
 }
 
 /**
- * movl memory, memory
+ * mov32 memory, memory
  */
-static void movl_m_m(ex86_pointer_32 src, ex86_pointer_32 dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov32_m_m,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_NONE
+) {
+    *dest.p32 = *src1.p32;
 }
 
 /**
- * movq register, register
+ * mov64 register, register
  */
-static void movq_r_r(ex86_register_64 *src, ex86_register_64 *dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov64_r_r,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_NONE
+) {
+    *dest.r64 = *src1.r64;
 }
 
 /**
- * movq immediate, register
+ * mov64 register, immediate
  */
-static void movq_i_r(uint_64t src, ex86_register_64 *dest) {
-    *dest = src;
+EX86_SPECIFY_INSTRUCTION(
+    mov64_r_i,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_IMMEDIATE,
+    EX86_TARGET_NONE
+) {
+    *dest.r64 = src1.i64;
 }
 
 /**
- * movq immediate, memory
+ * mov64 memory, immediate
  */
-static void movq_i_m(uint_32t src, ex86_pointer_64 dest) {
-    *dest = src;
+EX86_SPECIFY_INSTRUCTION(
+    mov64_m_i,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_IMMEDIATE,
+    EX86_TARGET_NONE
+) {
+    *dest.p64 = src1.i64;
 }
 
 /**
- * movq memory, register
+ * mov64 register, memory
  */
-static void movq_m_r(ex86_pointer_64 src, ex86_register_64 *dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov64_r_m,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_NONE
+) {
+    *dest.r64 = *src1.p64;
 }
 
 /**
- * movl register, memory
+ * mov64 memory, register
  */
-static void movq_r_m(ex86_register_64 *src, ex86_pointer_64 dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov64_m_r,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_REGISTER,
+    EX86_TARGET_NONE
+) {
+    *dest.p64 = *src1.r64;
 }
 
 /**
- * movl memory, memory
+ * mov64 memory, memory
  */
-static void movq_m_m(ex86_pointer_64 src, ex86_pointer_64 dest) {
-    *dest = *src;
+EX86_SPECIFY_INSTRUCTION(
+    mov64_m_m,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_MEMORY,
+    EX86_TARGET_NONE
+) {
+    *dest.p64 = *src1.p64;
 }
