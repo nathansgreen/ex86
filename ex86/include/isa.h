@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "context.h"
+#include "error.h"
 
 /**
  * This enumeration specifies the type a target is and also the type an
@@ -99,6 +100,9 @@ typedef union ex86_instruction_param {
     ex86_instruction_param src1, \
     ex86_instruction_param src2 \
 
+/** The opcode type. */
+typedef int ex86_opcode;
+
 /**
  * The function type for an instruction.
  */
@@ -109,7 +113,8 @@ typedef void ex86_instruction_func(EX86_INSTRUCTION_PARAMS);
  */
 typedef ex86_instruction_func *ex86_lookup_instruction_func(
     ex86_type_signature sig,
-    int op
+    ex86_opcode op,
+    ex86_error *errno
 );
 
 /** A macro for specifying new instructions. */
@@ -124,6 +129,10 @@ static void FUNC(EX86_INSTRUCTION_PARAMS)
     (DEST_TYPE)
 
 #define EX86_LOOKUP_INSTRUCTION(FUNC) \
-static ex86_instruction_func *FUNC(ex86_type_signature sig, int op)
+static ex86_instruction_func *FUNC( \
+    ex86_type_signature sig, \
+    ex86_opcode op, \
+    ex86_error *errno \
+)
 
 #endif

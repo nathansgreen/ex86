@@ -1,9 +1,10 @@
 #include <stdint.h>
 
+#include "isa/8086.h"
+
 #include "isa.h"
 #include "interpreter.h"
-
-#include "isa/8086.h"
+#include "error.h"
 
 /**
  * mov16 register, register
@@ -144,6 +145,7 @@ EX86_LOOKUP_INSTRUCTION(lookup) {
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_REGISTER_16, EX86_TARGET_MEMORY_16, EX86_TARGET_NONE): return &mov16_r_m;
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_MEMORY_16, EX86_TARGET_REGISTER_16, EX86_TARGET_NONE): return &mov16_m_r;
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_MEMORY_16, EX86_TARGET_MEMORY_16, EX86_TARGET_NONE): return &mov16_m_m;
+                default: *errno = EX86_ERROR_INSTRUCTION_SIGNATURE_MISMATCH; return 0;
             }
         case EX86_ISA_8086_OP_MOV32:
             switch(sig) {
@@ -153,6 +155,7 @@ EX86_LOOKUP_INSTRUCTION(lookup) {
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_REGISTER_32, EX86_TARGET_MEMORY_32, EX86_TARGET_NONE): return &mov32_r_m;
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_MEMORY_32, EX86_TARGET_REGISTER_32, EX86_TARGET_NONE): return &mov32_m_r;
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_MEMORY_32, EX86_TARGET_MEMORY_32, EX86_TARGET_NONE): return &mov32_m_m;
+                default: *errno = EX86_ERROR_INSTRUCTION_SIGNATURE_MISMATCH; return 0;
             }
         case EX86_ISA_8086_OP_MOV64:
             switch(sig) {
@@ -162,9 +165,10 @@ EX86_LOOKUP_INSTRUCTION(lookup) {
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_REGISTER_64, EX86_TARGET_MEMORY_64, EX86_TARGET_NONE): return &mov64_r_m;
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_MEMORY_64, EX86_TARGET_REGISTER_64, EX86_TARGET_NONE): return &mov64_m_r;
                 case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_MEMORY_64, EX86_TARGET_MEMORY_64, EX86_TARGET_NONE): return &mov64_m_m;
+                default: *errno = EX86_ERROR_INSTRUCTION_SIGNATURE_MISMATCH; return 0;
             }
+        default: *errno = EX86_ERROR_OP_NOT_FOUND; return 0;
     }
-    return 0;
 }
 
 void ex86_isa_register_8086(ex86_interpreter *interp) {
