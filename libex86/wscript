@@ -1,0 +1,5 @@
+def build(bld):
+    bld.shlib(
+        source      = bld.path.ant_glob([ 'src/*.c', 'src/**/*.c' ]),
+        includes    = 'include',
+        target      = 'ex86')
