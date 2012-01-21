@@ -3,6 +3,9 @@
 
 /** Error codes. */
 typedef enum ex86_error {
+    /** No error. */
+    EX86_ERROR_NONE = -1,
+
     /** Unknown error. */
     EX86_ERROR_UNKNOWN = 0,
 
@@ -10,7 +13,10 @@ typedef enum ex86_error {
     EX86_ERROR_OP_NOT_FOUND,
 
     /** Instruction signature does not match. */
-    EX86_ERROR_INSTRUCTION_SIGNATURE_MISMATCH
+    EX86_ERROR_INSTRUCTION_SIGNATURE_MISMATCH,
+
+    /** Syntax error. */
+    EX86_ERROR_SYNTAX_ERROR
 } ex86_error;
 
 #endif

@@ -33,13 +33,13 @@ typedef struct ex86_statement {
         /** A comment. */
         struct {
             /** Comment data. */
-            const char *comment;
+            char *comment;
         } comment;
 
         /** A named label. */
         struct {
             /** Symbol name. */
-            const char *symbol;
+            char *symbol;
         } label;
 
         /** An instruction. */
@@ -53,11 +53,20 @@ typedef struct ex86_statement {
             /** Destination parameter. */
             ex86_instruction_param dest;
 
+            /** Destination parameter type. */
+            ex86_instruction_param_type dest_type;
+
             /** First source register. */
             ex86_instruction_param src1;
 
+            /** First source register parameter type. */
+            ex86_instruction_param_type src1_type;
+
             /** Second source register (for use with AVX, etc.). */
             ex86_instruction_param src2;
+
+            /** Second source register parameter type. */
+            ex86_instruction_param_type src2_type;
         } instruction;
     } data;
 } ex86_statement;

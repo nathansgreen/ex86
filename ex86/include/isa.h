@@ -19,38 +19,44 @@ typedef enum ex86_instruction_param_type {
     /** Nothing (i.e. should be blank). */
     EX86_TARGET_NONE = 0,
 
-    /** 16-bit register. */
-    EX86_TARGET_REGISTER_16,
-
-    /** 32-bit register. */
-    EX86_TARGET_REGISTER_32,
-
-    /** 64-bit register. */
-    EX86_TARGET_REGISTER_64,
-
     /** Pointer to 8 bits in memory. */
     EX86_TARGET_MEMORY_8,
-
-    /** Pointer to 16 bits in memory. */
-    EX86_TARGET_MEMORY_16,
-
-    /** Pointer to 32 bits in memory. */
-    EX86_TARGET_MEMORY_32,
-
-    /** Pointer to 64 bits in memory. */
-    EX86_TARGET_MEMORY_64,
 
     /** Immediate 8-bit value. */
     EX86_TARGET_IMMEDIATE_8,
 
+#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
+    /** 16-bit register. */
+    EX86_TARGET_REGISTER_16,
+
+    /** Pointer to 16 bits in memory. */
+    EX86_TARGET_MEMORY_16,
+
     /** Immediate 16-bit value. */
     EX86_TARGET_IMMEDIATE_16,
+#endif
+
+#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 32
+    /** 32-bit register. */
+    EX86_TARGET_REGISTER_32,
+
+    /** Pointer to 32 bits in memory. */
+    EX86_TARGET_MEMORY_32,
 
     /** Immediate 32-bit value. */
     EX86_TARGET_IMMEDIATE_32,
+#endif
+
+#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 64
+    /** 64-bit register. */
+    EX86_TARGET_REGISTER_64,
+
+    /** Pointer to 64 bits in memory. */
+    EX86_TARGET_MEMORY_64,
 
     /** Immediate 64-bit value. */
     EX86_TARGET_IMMEDIATE_64,
+#endif
 
     /** Label. */
     EX86_TARGET_LABEL,
@@ -58,6 +64,21 @@ typedef enum ex86_instruction_param_type {
     /** Maximum limit. */
     EX86_MAX_TARGET
 } ex86_instruction_param_type;
+
+/** Get an appropriate type for an immediate value. */
+#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 64
+#   define EX86_IMMEDIATE_TYPE(VALUE) ((VALUE >> 64) != 0 ? EX86_TARGET_IMMEDIATE_64 : \
+                                       (VALUE >> 32) != 0 ? EX86_TARGET_IMMEDIATE_32 : \
+                                       (VALUE >> 16) != 0 ? EX86_TARGET_IMMEDIATE_16 : \
+                                       EX86_TARGET_IMMEDIATE_8)
+#elif defined(REGISTER_SIZE) && REGISTER_SIZE >= 32
+#   define EX86_IMMEDIATE_TYPE(VALUE) ((VALUE >> 32) != 0 ? EX86_TARGET_IMMEDIATE_32 : \
+                                       (VALUE >> 16) != 0 ? EX86_TARGET_IMMEDIATE_16 : \
+                                       EX86_TARGET_IMMEDIATE_8)
+#elif defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
+#   define EX86_IMMEDIATE_TYPE(VALUE) ((VALUE >> 16) != 0 ? EX86_TARGET_IMMEDIATE_16 : \
+                                       EX86_TARGET_IMMEDIATE_8)
+#endif
 
 /** The label type. */
 typedef int ex86_label;
@@ -73,17 +94,8 @@ typedef union ex86_instruction_param {
     /** Pointer value. */
     ex86_pointer p;
 
-    /** An immediate 8-bit value. */
-    int8_t i8;
-
-    /** An immediate 16-bit value. */
-    int16_t i16;
-
-    /** An immediate 32-bit value. */
-    int32_t i32;
-
-    /** An immediate 64-bit value. */
-    int64_t i64;
+    /** An immediate value. */
+    ex86_immediate i;
 
     /** A label. */
     ex86_label lbl;
