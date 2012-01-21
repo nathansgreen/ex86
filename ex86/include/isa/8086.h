@@ -3,14 +3,6 @@
 
 #include "isa.h"
 
-struct ex86_isa;
-
-/** ID of the ISA. */
-#define EX86_ISA_8086_ID 1
-
-/** Name of the ISA. */
-#define EX86_ISA_8086_NAME "8086"
-
 /** The opcodes for the generic instructions. */
 typedef enum ex86_isa_8086_ops {
     /** nop */

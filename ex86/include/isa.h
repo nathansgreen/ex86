@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-#include "uthash.h"
-
 #include "error.h"
 #include "context.h"
 
@@ -20,49 +18,49 @@ typedef enum ex86_instruction_param_type {
     EX86_TARGET_NONE = 0,
 
     /** Pointer to 8 bits in memory. */
-    EX86_TARGET_MEMORY_8,
+    EX86_TARGET_MEMORY_8 = 1,
 
     /** Immediate 8-bit value. */
-    EX86_TARGET_IMMEDIATE_8,
+    EX86_TARGET_IMMEDIATE_8 = 2,
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
     /** 16-bit register. */
-    EX86_TARGET_REGISTER_16,
+    EX86_TARGET_REGISTER_16 = 3,
 
     /** Pointer to 16 bits in memory. */
-    EX86_TARGET_MEMORY_16,
+    EX86_TARGET_MEMORY_16 = 4,
 
     /** Immediate 16-bit value. */
-    EX86_TARGET_IMMEDIATE_16,
+    EX86_TARGET_IMMEDIATE_16 = 5,
 #endif
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 32
     /** 32-bit register. */
-    EX86_TARGET_REGISTER_32,
+    EX86_TARGET_REGISTER_32 = 6,
 
     /** Pointer to 32 bits in memory. */
-    EX86_TARGET_MEMORY_32,
+    EX86_TARGET_MEMORY_32 = 7,
 
     /** Immediate 32-bit value. */
-    EX86_TARGET_IMMEDIATE_32,
+    EX86_TARGET_IMMEDIATE_32 = 8,
 #endif
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 64
     /** 64-bit register. */
-    EX86_TARGET_REGISTER_64,
+    EX86_TARGET_REGISTER_64 = 9,
 
     /** Pointer to 64 bits in memory. */
-    EX86_TARGET_MEMORY_64,
+    EX86_TARGET_MEMORY_64 = 10,
 
     /** Immediate 64-bit value. */
-    EX86_TARGET_IMMEDIATE_64,
+    EX86_TARGET_IMMEDIATE_64 = 11,
 #endif
 
     /** Label. */
-    EX86_TARGET_LABEL,
+    EX86_TARGET_LABEL = 12,
 
     /** Maximum limit. */
-    EX86_MAX_TARGET
+    EX86_MAX_TARGET = 13
 } ex86_instruction_param_type;
 
 /** Get an appropriate type for an immediate value. */

@@ -4,7 +4,7 @@
 /** Error codes. */
 typedef enum ex86_error {
     /** No error. */
-    EX86_ERROR_NONE = -1,
+    EX86_NO_ERROR = -1,
 
     /** Unknown error. */
     EX86_ERROR_UNKNOWN = 0,
