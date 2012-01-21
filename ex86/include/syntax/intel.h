@@ -12,7 +12,8 @@ void ex86_syntax_intel_register(ex86_interpreter *);
 /** The enum of mnemonics. */
 typedef enum ex86_syntax_intel_mnemonic {
     EX86_INTEL_MOV,
-    EX86_INTEL_NOP
+    EX86_INTEL_NOP,
+    EX86_MAX_INTEL
 } ex86_syntax_intel_mnemonic;
 
 /**  */

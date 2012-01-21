@@ -25,7 +25,7 @@ struct ex86_config;
 #   define EX86_REGISTER_16_GET(SRC) (*SRC & 0xFFFF)
 
     /** Set the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_SET(DEST, SRC) *DEST = *DEST >> 48 << 48 | SRC
+#   define EX86_REGISTER_16_SET(DEST, SRC) *DEST = *DEST >> 16 << 16 | SRC
 
     /** A pointer to a value in memory. */
     typedef int64_t *ex86_pointer;
