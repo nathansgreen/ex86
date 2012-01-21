@@ -15,7 +15,8 @@ struct ex86_isa;
 typedef enum ex86_isa_8086_ops {
     /** nop */
     EX86_ISA_8086_OP_NOP,
-
+    /** mov */
+    EX86_ISA_8086_OP_ADD,
     /** mov */
     EX86_ISA_8086_OP_MOV,
 
