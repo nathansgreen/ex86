@@ -24,10 +24,11 @@ BuildContext.exec_command = exec_command
 OUT = 'build'
 
 def options(opt):
-    opt.load('compiler_c')
+    opt.load('compiler_c flex bison')
 
 def configure(conf):
-    conf.load('compiler_c')
+    conf.load('compiler_c flex bison')
+
     conf.env.append_value('CFLAGS', '-DNDEBUG')
     conf.env.append_value('CFLAGS', '-DREGISTER_SIZE=16')
     conf.env.append_value('CFLAGS', '-DISA_8086')
@@ -40,4 +41,4 @@ def configure(conf):
     
 def build(bld):
     bld.recurse('ex86')
-    bld.recurse('iex86')
+    bld.recurse('iex86-intel')
