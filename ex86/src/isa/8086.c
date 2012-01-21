@@ -9,13 +9,16 @@
 /** nop */
 EX86_INSTRUCTION(nop) {
 }
+
 /** add */
 EX86_INSTRUCTION(add8_m_i) {
-    EX86_MEMORY_8_SET(dest.p, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(dest.p));
+    EX86_MEMORY_8_SET(dest.p, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(src1.i));
 }
+
 EX86_INSTRUCTION(add8_r_r) {
-    EX86_MEMORY_8_SET(dest.p, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(src.p));
+    EX86_MEMORY_8_SET(dest.p, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(src1.i));
 }
+
 /** mov8 memory, immediate */
 EX86_INSTRUCTION(mov8_m_i) {
     EX86_MEMORY_8_SET(dest.p, EX86_IMMEDIATE_8(src1.i));
