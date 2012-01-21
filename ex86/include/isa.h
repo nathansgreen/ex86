@@ -17,7 +17,7 @@ typedef int ex86_isa_id;
     instruction parameter is allowed to be. */
 typedef enum ex86_instruction_param_type {
     /** Nothing (i.e. should be blank). */
-    EX86_TARGET_NONE            = 0,
+    EX86_TARGET_NONE = 0,
 
     /** 16-bit register. */
     EX86_TARGET_REGISTER_16,

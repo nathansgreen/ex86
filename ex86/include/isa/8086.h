@@ -14,20 +14,8 @@ typedef enum ex86_isa_8086_ops {
     /** nop */
     EX86_ISA_8086_OP_NOP,
 
-#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
-    /** mov16 */
-    EX86_ISA_8086_OP_MOV16,
-#endif
-
-#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 32
-    /** mov32 */
-    EX86_ISA_8086_OP_MOV32,
-#endif
-
-#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 64
-    /** mov64 */
-    EX86_ISA_8086_OP_MOV64,
-#endif
+    /** mov */
+    EX86_ISA_8086_OP_MOV,
 
     /** Maximum value. */
     EX86_MAX_ISA_8086_OP
