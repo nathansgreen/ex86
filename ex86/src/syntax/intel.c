@@ -83,7 +83,7 @@ bool fill_parameters(ex86_interpreter *interp, ex86_statement *stmt,
 #undef FILL_PARAMETER
 
 bool emit_statement(ex86_interpreter *interp, const char *line,
-                    ex86_statement *stmt, ex86_error *errno) {
+                    ex86_statement *stmt, ex86_error *exerrno) {
     /* try scan for a label first with PROFESSIONAL SSCANF PARSING */
     char *label_name = NULL;
     if(sscanf(line, "%as:", &label_name)) {
@@ -106,7 +106,7 @@ bool emit_statement(ex86_interpreter *interp, const char *line,
 
         HASH_FIND_STR(lookup, instr_mnemonic, entry);
         if(entry == NULL) {
-            *errno = EX86_ERROR_OP_NOT_FOUND;
+            *exerrno = EX86_ERROR_OP_NOT_FOUND;
             goto cleanup;
         }
 
@@ -114,7 +114,7 @@ bool emit_statement(ex86_interpreter *interp, const char *line,
         stmt->data.instruction.op = entry->op;
         if(!fill_parameters(interp, stmt, instr_dest, instr_src1,
                             instr_src2)) {
-            *errno = EX86_ERROR_SYNTAX_ERROR;
+            *exerrno = EX86_ERROR_SYNTAX_ERROR;
             goto cleanup;
         }
         return true;
@@ -127,7 +127,7 @@ bool emit_statement(ex86_interpreter *interp, const char *line,
 
         HASH_FIND_STR(lookup, instr_mnemonic, entry);
         if(entry == NULL) {
-            *errno = EX86_ERROR_OP_NOT_FOUND;
+            *exerrno = EX86_ERROR_OP_NOT_FOUND;
             goto cleanup;
         }
 
@@ -136,7 +136,7 @@ bool emit_statement(ex86_interpreter *interp, const char *line,
         stmt->data.instruction.src2_type = EX86_TARGET_NONE;
         if(!fill_parameters(interp, stmt, instr_dest, instr_src1,
                             NULL)) {
-            *errno = EX86_ERROR_SYNTAX_ERROR;
+            *exerrno = EX86_ERROR_SYNTAX_ERROR;
             goto cleanup;
         }
         return true;
@@ -148,7 +148,7 @@ bool emit_statement(ex86_interpreter *interp, const char *line,
 
         HASH_FIND_STR(lookup, instr_mnemonic, entry);
         if(entry == NULL) {
-            *errno = EX86_ERROR_OP_NOT_FOUND;
+            *exerrno = EX86_ERROR_OP_NOT_FOUND;
             goto cleanup;
         }
 
@@ -157,7 +157,7 @@ bool emit_statement(ex86_interpreter *interp, const char *line,
         stmt->data.instruction.src1_type = EX86_TARGET_NONE;
         stmt->data.instruction.src2_type = EX86_TARGET_NONE;
         if(!fill_parameters(interp, stmt, instr_dest, NULL, NULL)) {
-            *errno = EX86_ERROR_SYNTAX_ERROR;
+            *exerrno = EX86_ERROR_SYNTAX_ERROR;
             goto cleanup;
         }
         return true;
@@ -169,7 +169,7 @@ bool emit_statement(ex86_interpreter *interp, const char *line,
 
         HASH_FIND_STR(lookup, instr_mnemonic, entry);
         if(entry == NULL) {
-            *errno = EX86_ERROR_OP_NOT_FOUND;
+            *exerrno = EX86_ERROR_OP_NOT_FOUND;
             goto cleanup;
         }
 
@@ -180,7 +180,7 @@ bool emit_statement(ex86_interpreter *interp, const char *line,
         stmt->data.instruction.src2_type = EX86_TARGET_NONE;
     }
 
-    *errno = EX86_ERROR_SYNTAX_ERROR;
+    *exerrno = EX86_ERROR_SYNTAX_ERROR;
 
 cleanup:
     free(instr_mnemonic);
