@@ -28,7 +28,10 @@ def options(opt):
 
 def configure(conf):
     conf.load('compiler_c')
+    conf.env.append_value('CFLAGS', '-DNDEBUG')
     conf.env.append_value('CFLAGS', '-DREGISTER_SIZE=64')
+    conf.env.append_value('CFLAGS', '-DISA_8086')
+    conf.env.append_value('CFLAGS', '-DSYNTAX_INTEL')
     conf.env.append_value('CFLAGS', '-Wall')
     conf.env.append_value('CFLAGS', '-Werror')
     conf.env.append_value('CFLAGS', '-Wfatal-errors')

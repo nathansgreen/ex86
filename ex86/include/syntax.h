@@ -3,6 +3,11 @@
 
 #include "isa.h"
 
+#include "uthash.h"
+
+/** Forward declare interpreter. */
+struct ex86_interpreter;
+
 /** The type of the statement. */
 typedef enum ex86_statement_type {
     /** An unknown statement type. */
@@ -57,9 +62,18 @@ typedef struct ex86_statement {
     } data;
 } ex86_statement;
 
-/** The syntax specification dispatch table. */
-typedef struct ex86_syntax_vtable {
-    int dummy;
-} ex86_syntax_vtable;
+/** The registration function for syntaxes. */
+typedef void ex86_syntax_register_func(struct ex86_interpreter *);
+
+/** The unregistration function for syntaxes. */
+typedef void ex86_syntax_unregister_func(struct ex86_interpreter *);
+
+/** The syntax struct. */
+typedef struct ex86_syntax {
+    const char *name;
+    ex86_syntax_register_func *on_register;
+    ex86_syntax_unregister_func *on_unregister;
+    UT_hash_handle hh;
+} ex86_syntax;
 
 #endif

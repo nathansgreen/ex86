@@ -3,10 +3,16 @@
 #include "isa.h"
 #include "interpreter.h"
 #include "error.h"
+#include "assert.h"
+#include "log.h"
+
+/** nop */
+EX86_INSTRUCTION(nop) {
+}
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
 /** mov16 register, register */
- EX86_INSTRUCTION(mov16_r_r) {
+EX86_INSTRUCTION(mov16_r_r) {
     *dest.r16 = *src1.r16;
 }
 
@@ -103,6 +109,12 @@ EX86_INSTRUCTION(mov64_m_m) {
 /** Generate lookup tables. */
 EX86_LOOKUP_INSTRUCTION(lookup) {
     switch(op) {
+        case EX86_ISA_8086_OP_NOP:
+        switch(sig) {
+            case EX86_INSTRUCTION_SIGNATURE(EX86_TARGET_NONE, EX86_TARGET_NONE, EX86_TARGET_NONE): return &nop;
+            default: *errno = EX86_ERROR_INSTRUCTION_SIGNATURE_MISMATCH; return 0;
+        }
+
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
         case EX86_ISA_8086_OP_MOV16:
             switch(sig) {
@@ -145,6 +157,20 @@ EX86_LOOKUP_INSTRUCTION(lookup) {
     }
 }
 
-void ex86_isa_register_8086(ex86_interpreter *interp) {
-    ex86_interpreter_register_isa(interp, EX86_ISA_8086_ID, &lookup);
+static void on_register(ex86_interpreter *interp) {
+}
+
+static void on_unregister(ex86_interpreter *interp) {
+}
+
+static ex86_isa isa = {
+    .id             = EX86_ISA_8086_ID,
+    .name           = EX86_ISA_8086_NAME,
+    .on_register    = &on_register,
+    .on_unregister  = &on_unregister,
+    .lookup         = &lookup
+};
+
+ex86_isa *ex86_isa_8086() {
+    return &isa;
 }

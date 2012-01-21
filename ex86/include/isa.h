@@ -8,6 +8,9 @@
 
 #include "uthash.h"
 
+/** Forward declare interpreter. */
+struct ex86_interpreter;
+
 /** The ISA ID type. */
 typedef int ex86_isa_id;
 
@@ -132,5 +135,21 @@ static ex86_instruction_func *FUNC( \
     ex86_opcode op, \
     ex86_error *errno \
 )
+
+/** The registration function for ISAs. */
+typedef void ex86_isa_register_func(struct ex86_interpreter *);
+
+/** The unregistration function for ISAs. */
+typedef void ex86_isa_unregister_func(struct ex86_interpreter *);
+
+/** The ISA struct. */
+typedef struct ex86_isa {
+    ex86_isa_id id;
+    const char *name;
+    ex86_isa_register_func *on_register;
+    ex86_isa_unregister_func *on_unregister;
+    ex86_lookup_instruction_func *lookup;
+    UT_hash_handle hh;
+} ex86_isa;
 
 #endif
