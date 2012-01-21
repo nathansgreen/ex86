@@ -108,20 +108,7 @@ typedef ex86_instruction_func *ex86_instruction_candidates[EX86_MAX_TARGET][EX86
 #define EX86_INSTRUCTION(FUNC) \
 static void FUNC(EX86_INSTRUCTION_PARAMS)
 
-/** The registration function for ISAs. */
-typedef void ex86_isa_register_func(struct ex86_interpreter *);
-
-/** The unregistration function for ISAs. */
-typedef void ex86_isa_unregister_func(struct ex86_interpreter *);
-
-/** The ISA struct. */
-typedef struct ex86_isa {
-    ex86_isa_id id;
-    const char *name;
-    ex86_isa_register_func *on_register;
-    ex86_isa_unregister_func *on_unregister;
-    ex86_instruction_candidates **lookup;
-    UT_hash_handle hh;
-} ex86_isa;
+/** The function for looking up instruction candidates. */
+typedef ex86_instruction_candidates **ex86_isa_lookup_func();
 
 #endif

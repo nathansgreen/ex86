@@ -47,10 +47,15 @@ static void on_unregister(ex86_interpreter *interp) {
     }
 }
 
+void emit_statement() {
+    
+}
+
 static ex86_syntax syntax = {
     .name           = "intel",
     .on_register    = &on_register,
-    .on_unregister  = &on_unregister
+    .on_unregister  = &on_unregister,
+    //.emit_statement = &emit_statement
 };
 
 ex86_syntax *ex86_syntax_intel() {

@@ -104,7 +104,6 @@ EX86_INSTRUCTION(mov64_m_r) {
 EX86_INSTRUCTION(mov64_m_m) {
     EX86_MEMORY_64_SET(dest.p, EX86_MEMORY_64_GET(dest.p));
 }
-#endif
 
 static ex86_instruction_candidates lookup[EX86_MAX_ISA_8086_OP] = {
     [EX86_ISA_8086_OP_NOP    ][EX86_TARGET_NONE        ][EX86_TARGET_NONE        ][EX86_TARGET_NONE        ] = &nop,
@@ -137,20 +136,8 @@ static ex86_instruction_candidates lookup[EX86_MAX_ISA_8086_OP] = {
 #endif
 };
 
-static void on_register(ex86_interpreter *interp) {
+ex86_instruction_candidates **ex86_isa_8086_lookup() {
+    return (ex86_instruction_candidates **)lookup;
 }
 
-static void on_unregister(ex86_interpreter *interp) {
-}
-
-static ex86_isa isa = {
-    .id             = EX86_ISA_8086_ID,
-    .name           = EX86_ISA_8086_NAME,
-    .on_register    = &on_register,
-    .on_unregister  = &on_unregister,
-    .lookup         = (ex86_instruction_candidates **)&lookup
-};
-
-ex86_isa *ex86_isa_8086() {
-    return &isa;
-}
+#endif

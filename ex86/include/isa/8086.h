@@ -1,6 +1,8 @@
 #ifndef ISA_8086_H_
 #define ISA_8086_H_
 
+#include "isa.h"
+
 struct ex86_isa;
 
 /** ID of the ISA. */
@@ -21,6 +23,6 @@ typedef enum ex86_isa_8086_ops {
     EX86_MAX_ISA_8086_OP
 } ex86_isa_8086_ops;
 
-struct ex86_isa *ex86_isa_8086();
+ex86_instruction_candidates **ex86_isa_8086_lookup();
 
 #endif
