@@ -6,9 +6,9 @@
 #endif
 
 #ifdef NDEBUG
-#   define LOG_DEBUG(...) do { fprintf(stderr, "[DEBUG] " __VA_ARGS__); fprintf(stderr, "\n"); } while(0)
+#   define EX86_LOG_DEBUG(...) do { fprintf(stderr, "[DEBUG] " __VA_ARGS__); fprintf(stderr, "\n"); } while(0)
 #else
-#   define LOG_DEBUG(...)
+#   define EX86_LOG_DEBUG(...)
 #endif
 
 #endif

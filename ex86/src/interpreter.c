@@ -15,7 +15,7 @@ void ex86_interpreter_register_isa(ex86_interpreter *interp,
                                    struct ex86_isa *isa)
 {
     isa->on_register(interp);
-    LOG_DEBUG("registered ISA: %s", isa->name);
+    EX86_LOG_DEBUG("registered ISA: %s", isa->name);
     HASH_ADD_INT(interp->isas, id, isa);
 }
 
@@ -23,7 +23,7 @@ void ex86_interpreter_register_syntax(ex86_interpreter *interp,
                                       struct ex86_syntax *syntax)
 {
     syntax->on_register(interp);
-    LOG_DEBUG("registered syntax: %s", syntax->name);
+    EX86_LOG_DEBUG("registered syntax: %s", syntax->name);
     HASH_ADD_KEYPTR(hh, interp->syntaxes, syntax->name, strlen(syntax->name),
                     syntax);
 }
@@ -32,7 +32,7 @@ static void interpreter_register(ex86_interpreter *interp);
 
 ex86_interpreter *ex86_interpreter_new(ex86_config *config) {
     ex86_interpreter *interp = (ex86_interpreter *)malloc(sizeof(ex86_interpreter));
-    LOG_DEBUG("created interpreter");
+    EX86_LOG_DEBUG("created interpreter");
     interp->ctx = ex86_context_new(config);
     interp->isas = NULL;
     interp->syntaxes = NULL;
@@ -44,21 +44,21 @@ void ex86_interpreter_destroy(ex86_interpreter *interp) {
     ex86_isa *isa, *tmp1;
     HASH_ITER(hh, interp->isas, isa, tmp1) {
         isa->on_unregister(interp);
-        LOG_DEBUG("unregistered ISA: %s", isa->name);
+        EX86_LOG_DEBUG("unregistered ISA: %s", isa->name);
         free(isa);
     }
 
     ex86_syntax *syntax, *tmp2;
     HASH_ITER(hh, interp->syntaxes, syntax, tmp2) {
         syntax->on_unregister(interp);
-        LOG_DEBUG("unregistered syntax: %s", syntax->name);
+        EX86_LOG_DEBUG("unregistered syntax: %s", syntax->name);
         free(syntax);
     }
 
     ex86_context_destroy(interp->ctx);
     free(interp);
 
-    LOG_DEBUG("destroyed interpreter");
+    EX86_LOG_DEBUG("destroyed interpreter");
 }
 
 /* do ISA/syntax registration stuff here */
