@@ -27,23 +27,39 @@ typedef struct ex86_statement {
     union {
         /** A comment. */
         struct {
+            /** Comment data. */
             const char *comment;
         } comment;
 
         /** A named label. */
         struct {
+            /** Symbol name. */
             const char *symbol;
         } label;
 
         /** An instruction. */
         struct {
+            /** ISA id. */
             ex86_isa_id id;
+
+            /** Opcode. */
             ex86_opcode op;
+
+            /** Destination parameter. */
             ex86_instruction_param dest;
+
+            /** First source register. */
             ex86_instruction_param src1;
+
+            /** Second source register (for use with AVX, etc.). */
             ex86_instruction_param src2;
         } instruction;
     } data;
 } ex86_statement;
+
+/** The syntax specification dispatch table. */
+typedef struct ex86_syntax_vtable {
+    int dummy;
+} ex86_syntax_vtable;
 
 #endif

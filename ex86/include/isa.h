@@ -1,10 +1,12 @@
 #ifndef ISA_H_
 #define ISA_H_
 
-#include <stdint.h>
-
 #include "context.h"
 #include "error.h"
+
+#include <stdint.h>
+
+#include "uthash.h"
 
 /** The ISA ID type. */
 typedef int ex86_isa_id;
@@ -97,7 +99,7 @@ typedef union ex86_instruction_param {
     ex86_context *ctx, \
     ex86_instruction_param dest, \
     ex86_instruction_param src1, \
-    ex86_instruction_param src2 \
+    ex86_instruction_param src2
 
 /** The opcode type. */
 typedef int ex86_opcode;

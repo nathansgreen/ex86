@@ -1,5 +1,3 @@
-#include <stdint.h>
-
 #include "isa/8086.h"
 
 #include "isa.h"
@@ -148,5 +146,5 @@ EX86_LOOKUP_INSTRUCTION(lookup) {
 }
 
 void ex86_isa_register_8086(ex86_interpreter *interp) {
-    ex86_isa_register(interp, EX86_ISA_8086_ID, &lookup);
+    ex86_interpreter_register_isa(interp, EX86_ISA_8086_ID, &lookup);
 }

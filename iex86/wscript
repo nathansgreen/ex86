@@ -1,6 +1,6 @@
 def build(bld):
     bld.program(
         source      = bld.path.ant_glob([ 'src/*.c', 'src/**/*.c' ]),
-        includes    = ['include', '../ex86/include'],
+        includes    = ['include', '../ex86/include', '../include'],
         target      = 'iex86',
         use         = ['ex86'])

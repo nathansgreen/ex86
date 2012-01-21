@@ -1,5 +1,5 @@
 def build(bld):
     bld.stlib(
         source      = bld.path.ant_glob([ 'src/*.c', 'src/**/*.c' ]),
-        includes    = 'include',
+        includes    = ['include', '../include'],
         target      = 'ex86')
