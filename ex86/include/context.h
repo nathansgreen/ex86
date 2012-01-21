@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#include "config.h"
+struct ex86_config;
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
     /** A 16-bit register value. */
@@ -159,7 +159,7 @@ typedef struct ex86_context {
 } ex86_context;
 
 /** Allocate a new ex86 context. */
-ex86_context *ex86_context_new(ex86_config *);
+ex86_context *ex86_context_new(struct ex86_config *);
 
 /** Destroy the ex86 context. */
 void ex86_context_destroy(ex86_context *interp);

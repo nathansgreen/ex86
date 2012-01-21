@@ -1,15 +1,16 @@
 #include "interpreter.h"
 
-#include "isa.h"
-#include "syntax.h"
-#include "context.h"
-#include "log.h"
-
-#include "uthash.h"
-
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "uthash.h"
+
+#include "isa.h"
+#include "syntax.h"
+#include "config.h"
+#include "context.h"
+#include "log.h"
 
 void ex86_interpreter_register_isa(ex86_interpreter *interp,
                                    struct ex86_isa *isa)

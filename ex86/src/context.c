@@ -1,7 +1,9 @@
+#include "context.h"
+
 #include <stdlib.h>
 #include <string.h>
 
-#include "context.h"
+#include "config.h"
 
 ex86_context *ex86_context_new(ex86_config *config) {
     /* Conveniently, we don't have to care about initializing the registers to

@@ -1,14 +1,13 @@
 #ifndef ISA_H_
 #define ISA_H_
 
-#include "context.h"
-#include "error.h"
-
 #include <stdint.h>
 
 #include "uthash.h"
 
-/** Forward declare interpreter. */
+#include "error.h"
+#include "context.h"
+
 struct ex86_interpreter;
 
 /** The ISA ID type. */

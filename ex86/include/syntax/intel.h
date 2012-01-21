@@ -1,10 +1,9 @@
 #ifndef SYNTAX_INTEL_H_
 #define SYNTAX_INTEL_H_
 
-#include "syntax.h"
-
 #include "uthash.h"
 
+#include "syntax.h"
 #include "interpreter.h"
 
 /** Register the Intel syntax with the interpreter. */
@@ -23,6 +22,6 @@ typedef struct ex86_syntax_intel_mnemonic_entry {
     UT_hash_handle hh;
 } ex86_syntax_intel_mnemonic_entry;
 
-ex86_syntax *ex86_syntax_intel();
+struct ex86_syntax *ex86_syntax_intel();
 
 #endif
