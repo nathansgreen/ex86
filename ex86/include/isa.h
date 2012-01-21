@@ -17,43 +17,46 @@ typedef int ex86_isa_id;
     instruction parameter is allowed to be. */
 typedef enum ex86_instruction_param_type {
     /** Nothing (i.e. should be blank). */
-    EX86_TARGET_NONE            = 0x0,
+    EX86_TARGET_NONE            = 0,
 
     /** 16-bit register. */
-    EX86_TARGET_REGISTER_16     = 0x1,
+    EX86_TARGET_REGISTER_16,
 
     /** 32-bit register. */
-    EX86_TARGET_REGISTER_32     = 0x2,
+    EX86_TARGET_REGISTER_32,
 
     /** 64-bit register. */
-    EX86_TARGET_REGISTER_64     = 0x4,
+    EX86_TARGET_REGISTER_64,
 
     /** Pointer to 8 bits in memory. */
-    EX86_TARGET_MEMORY_8        = 0x10,
+    EX86_TARGET_MEMORY_8,
 
     /** Pointer to 16 bits in memory. */
-    EX86_TARGET_MEMORY_16       = 0x20,
+    EX86_TARGET_MEMORY_16,
 
     /** Pointer to 32 bits in memory. */
-    EX86_TARGET_MEMORY_32       = 0x40,
+    EX86_TARGET_MEMORY_32,
 
     /** Pointer to 64 bits in memory. */
-    EX86_TARGET_MEMORY_64       = 0x80,
+    EX86_TARGET_MEMORY_64,
 
     /** Immediate 8-bit value. */
-    EX86_TARGET_IMMEDIATE_8     = 0x100,
+    EX86_TARGET_IMMEDIATE_8,
 
     /** Immediate 16-bit value. */
-    EX86_TARGET_IMMEDIATE_16    = 0x200,
+    EX86_TARGET_IMMEDIATE_16,
 
     /** Immediate 32-bit value. */
-    EX86_TARGET_IMMEDIATE_32    = 0x400,
+    EX86_TARGET_IMMEDIATE_32,
 
     /** Immediate 64-bit value. */
-    EX86_TARGET_IMMEDIATE_64    = 0x800,
+    EX86_TARGET_IMMEDIATE_64,
 
     /** Label. */
-    EX86_TARGET_LABEL           = 0x1000,
+    EX86_TARGET_LABEL,
+
+    /** Maximum limit. */
+    EX86_MAX_TARGET
 } ex86_instruction_param_type;
 
 /** The label type. */
@@ -109,31 +112,12 @@ typedef int ex86_opcode;
 /** The function type for an instruction. */
 typedef void ex86_instruction_func(EX86_INSTRUCTION_PARAMS);
 
-/** The function type for the lookup instruction. */
-typedef ex86_instruction_func *ex86_lookup_instruction_func(
-    ex86_type_signature sig,
-    ex86_opcode op,
-    ex86_error *errno
-);
+/** The candidate table type. */
+typedef ex86_instruction_func *ex86_instruction_candidates[EX86_MAX_TARGET][EX86_MAX_TARGET][EX86_MAX_TARGET];
 
 /** A macro for specifying new instructions. */
 #define EX86_INSTRUCTION(FUNC) \
 static void FUNC(EX86_INSTRUCTION_PARAMS)
-
-/** Calculate a numerical type signature, for use with multi-instruction
-    blocks. */
-#define EX86_INSTRUCTION_SIGNATURE(DEST_TYPE, SRC1_TYPE, SRC2_TYPE) \
-    (SRC2_TYPE << 16) | \
-    (SRC1_TYPE << 8) | \
-    (DEST_TYPE)
-
-/** Create a instruction lookup function. */
-#define EX86_LOOKUP_INSTRUCTION(FUNC) \
-static ex86_instruction_func *FUNC( \
-    ex86_type_signature sig, \
-    ex86_opcode op, \
-    ex86_error *errno \
-)
 
 /** The registration function for ISAs. */
 typedef void ex86_isa_register_func(struct ex86_interpreter *);
@@ -147,7 +131,7 @@ typedef struct ex86_isa {
     const char *name;
     ex86_isa_register_func *on_register;
     ex86_isa_unregister_func *on_unregister;
-    ex86_lookup_instruction_func *lookup;
+    ex86_instruction_candidates **lookup;
     UT_hash_handle hh;
 } ex86_isa;
 

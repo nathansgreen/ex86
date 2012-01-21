@@ -26,8 +26,11 @@ typedef enum ex86_isa_8086_ops {
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 64
     /** mov64 */
-    EX86_ISA_8086_OP_MOV64
+    EX86_ISA_8086_OP_MOV64,
 #endif
+
+    /** Maximum value. */
+    EX86_MAX_ISA_8086_OP
 } ex86_isa_8086_ops;
 
 struct ex86_isa *ex86_isa_8086();
