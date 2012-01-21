@@ -67,32 +67,21 @@ typedef int64_t ex86_type_signature;
 
 /** A parameter to a basic instruction. */
 typedef union ex86_instruction_param {
-    /** 16-bit register. */
-    ex86_register_16 r16;
-#if REGISTER_SIZE >= 32
-    /** 32-bit register. */
-    ex86_register_32 r32;
-#endif
-#if REGISTER_SIZE >= 64
-    /** 64-bit register. */
-    ex86_register_64 r64;
-#endif
+    /** Register value. */
+    ex86_register r;
 
-    /** Pointer to an 8-bit integer. */
-    ex86_pointer_8 p8;
-    /** Pointer to an 16-bit integer. */
-    ex86_pointer_16 p16;
-    /** Pointer to an 32-bit integer. */
-    ex86_pointer_32 p32;
-    /** Pointer to an 16-bit integer. */
-    ex86_pointer_64 p64;
+    /** Pointer value. */
+    ex86_pointer p;
 
     /** An immediate 8-bit value. */
     int8_t i8;
+
     /** An immediate 16-bit value. */
     int16_t i16;
+
     /** An immediate 32-bit value. */
     int32_t i32;
+
     /** An immediate 64-bit value. */
     int64_t i64;
 

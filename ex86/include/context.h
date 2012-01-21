@@ -5,57 +5,96 @@
 
 struct ex86_config;
 
-#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
-    /** A 16-bit register value. */
-    typedef int16_t ex86_register_value_16;
-
-    /** A 16-bit register. */
-    typedef ex86_register_value_16 *ex86_register_16;
-#endif
-
-#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 32
-    /** A 32-bit register value. */
-    typedef int32_t ex86_register_value_32;
-
-    /** A 32-bit register. */
-    typedef ex86_register_value_32 *ex86_register_32;
-#endif
-
-#if defined(REGISTER_SIZE) && REGISTER_SIZE >= 64
-    /** A 64-bit register value. */
-    typedef int64_t ex86_register_value_64;
-
-    /** A 64-bit register. */
-    typedef ex86_register_value_64 *ex86_register_64;
-#endif
-
 #if defined(REGISTER_SIZE) && REGISTER_SIZE == 64
-    /** Set the actual register size. */
-    typedef ex86_register_value_64 ex86_register_value;
+    /** A register value. */
+    typedef int64_t ex86_register_value;
 
-    /** Get the first 64-bits of the register (rax, rbx, etc.) */
-#   define EX86_REGISTER_VALUE_64(VALUE) VALUE
+    /** Get the low 64-bits of the register (rax, rbx, etc.) */
+#   define EX86_REGISTER_64_GET(SRC) *SRC
 
-    /** Get the first 32-bits of the register (eax, ebx, etc.) */
-#   define EX86_REGISTER_VALUE_32(VALUE) (ex86_register_value_32)(VALUE & 0xFFFFFFFF)
+    /** Set the low 64-bits of the register (rax, rbx, etc.) */
+#   define EX86_REGISTER_64_SET(DEST, SRC) *DEST = SRC
 
-    /** Get the first 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_VALUE_16(VALUE) (ex86_register_value_16)(VALUE & 0xFFFF)
+    /** Get the low 32-bits of the register (eax, ebx, etc.) */
+#   define EX86_REGISTER_32_GET(SRC) (*SRC & 0xFFFFFFFF)
+
+    /** Set the low 32-bits of the register (eax, ebx, etc.) */
+#   define EX86_REGISTER_32_SET(DEST, SRC) *DEST = *DEST >> 32 << 32 | SRC
+
+    /** Get the low 16-bits of the register (ax, bx, etc.) */
+#   define EX86_REGISTER_16_GET(SRC) (*SRC & 0xFFFF)
+
+    /** Set the low 16-bits of the register (ax, bx, etc.) */
+#   define EX86_REGISTER_16_SET(DEST, SRC) *DEST = *DEST >> 48 << 48 | SRC
+
+    /** A pointer to a value in memory. */
+    typedef int64_t *ex86_pointer;
+
+    /** Get 64 bits in memory. */
+#   define EX86_MEMORY_64_GET EX86_REGISTER_64_GET
+
+    /** Set 64 bits in memory. */
+#   define EX86_MEMORY_64_SET EX86_REGISTER_64_SET
+
+    /** Get 32 bits in memory. */
+#   define EX86_MEMORY_32_GET EX86_REGISTER_32_GET
+
+    /** Set 32 bits in memory. */
+#   define EX86_MEMORY_32_SET EX86_REGISTER_32_SET
+
+    /** Get 16 bits in memory. */
+#   define EX86_MEMORY_16_GET EX86_REGISTER_16_GET
+
+    /** Set 16 bits in memory. */
+#   define EX86_MEMORY_16_SET EX86_REGISTER_16_SET
 #elif defined(REGISTER_SIZE) && REGISTER_SIZE == 32
-    /** Set the actual register size. */
-    typedef ex86_register_value_32 ex86_register_value;
+    /** A register value. */
+    typedef int32_t ex86_register_value;
 
-    /** Get the first 32-bits of the register (eax, ebx, etc.) */
-#   define EX86_REGISTER_VALUE_32(VALUE) VALUE
+    /** Get the low 32-bits of the register (eax, ebx, etc.) */
+#   define EX86_REGISTER_32_GET(SRC) *SRC
 
-    /** Get the first 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_VALUE_16(VALUE) (ex86_register_value_16)(VALUE & 0xFFFF)
+    /** Set the low 32-bits of the register (eax, ebx, etc.) */
+#   define EX86_REGISTER_32_SET(DEST, SRC) *DEST = SRC
+
+    /** Get the low 16-bits of the register (ax, bx, etc.) */
+#   define EX86_REGISTER_16_GET(SRC) (*SRC & 0xFFFF)
+
+    /** Set the low 16-bits of the register (ax, bx, etc.) */
+#   define EX86_REGISTER_16_SET(DEST, SRC) *DEST = *DEST >> 16 << 16 | SRC
+
+    /** A pointer to a value in memory. */
+    typedef int32_t *ex86_pointer;
+
+    /** Get 32 bits in memory. */
+#   define EX86_MEMORY_32_GET EX86_REGISTER_32_GET
+
+    /** Set 32 bits in memory. */
+#   define EX86_MEMORY_32_SET EX86_REGISTER_32_SET
+
+    /** Get 16 bits in memory. */
+#   define EX86_MEMORY_16_GET EX86_REGISTER_16_GET
+
+    /** Set 16 bits in memory. */
+#   define EX86_MEMORY_16_SET EX86_REGISTER_16_SET
 #elif defined(REGISTER_SIZE) && REGISTER_SIZE == 16
-    /** Set the actual register size. */
-    typedef ex86_register_value_16 ex86_register_value;
+    /** A register value. */
+    typedef int16_t ex86_register_value;
 
-    /** Get the first 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_VALUE_16(VALUE) VALUE
+    /** Get the low 16-bits of the register (ax, bx, etc.) */
+#   define EX86_REGISTER_16_GET(SRC) *SRC
+
+    /** Set the low 16-bits of the register (ax, bx, etc.) */
+#   define EX86_REGISTER_16_SET(DEST, SRC) *DEST = SRC
+
+    /** A pointer to a value in memory. */
+    typedef int16_t *ex86_pointer;
+
+    /** Get 16 bits in memory. */
+#   define EX86_MEMORY_16_GET EX86_REGISTER_16_GET
+
+    /** Set 16 bits in memory. */
+#   define EX86_MEMORY_16_SET EX86_REGISTER_16_SET
 #else
 #   error "REGISTER_SIZE not specified or invalid"
 #endif
@@ -109,18 +148,6 @@ typedef int ex86_flags;
 
 /** Nested task flag. */
 #define EX86_FLAGS_NT(FLAGS)        (FLAGS & 0x4000) // 14
-
-/** A pointer to an 8-bit value in memory. */
-typedef int8_t *ex86_pointer_8;
-
-/** A pointer to a 16-bit value in memory. */
-typedef int16_t *ex86_pointer_16;
-
-/** A pointer to a 32-bit value in memory. */
-typedef int32_t *ex86_pointer_32;
-
-/** A pointer to a 64-bit value in memory. */
-typedef int64_t *ex86_pointer_64;
 
 /** The ex86 execution context. */
 typedef struct ex86_context {
