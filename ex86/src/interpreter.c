@@ -46,6 +46,7 @@ ex86_error ex86_evaluate(ex86_interpreter *interp, ex86_statement *stmt) {
             return EX86_NO_ERROR;
         }
     }
+    return EX86_ERROR_UNKNOWN;
 }
 
 void ex86_interpreter_destroy(ex86_interpreter *interp) {

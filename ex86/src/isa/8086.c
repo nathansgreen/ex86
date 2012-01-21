@@ -12,12 +12,12 @@ EX86_INSTRUCTION(nop) {
 
 /** mov8 memory, immediate */
 EX86_INSTRUCTION(mov8_m_i) {
-    EX86_MEMORY_8_SET(dest.p, EX86_IMMEDIATE_8(dest.p));
+    EX86_MEMORY_8_SET(dest.p, EX86_IMMEDIATE_8(src1.i));
 }
 
 /** mov8 memory, memory */
 EX86_INSTRUCTION(mov8_m_m) {
-    EX86_MEMORY_8_SET(dest.p, EX86_MEMORY_8_GET(dest.p));
+    EX86_MEMORY_8_SET(dest.p, EX86_MEMORY_8_GET(src1.p));
 }
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
