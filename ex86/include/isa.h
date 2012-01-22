@@ -66,7 +66,7 @@ typedef enum ex86_instruction_param_type {
     EX86_TARGET_LABEL = 14,
 
     /** Maximum limit. */
-    EX86_MAX_TARGET = 15
+    EX86_MAX_TARGET
 } ex86_instruction_param_type;
 
 /** Get an appropriate type for an immediate value. */
