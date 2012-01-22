@@ -22,13 +22,25 @@ typedef ptrdiff_t ex86_pointer;
 #   define EX86_REGISTER_32_GET(CTX, SRC) (int32_t)(CTX->registers[SRC])
 
     /** Set the low 32-bits of the register (eax, ebx, etc.) */
-#   define EX86_REGISTER_32_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] >> 32 << 32 | (SRC)
+#   define EX86_REGISTER_32_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0xFFFFFFFF00000000 | (SRC)
 
     /** Get the low 16-bits of the register (ax, bx, etc.) */
 #   define EX86_REGISTER_16_GET(CTX, SRC) (int16_t)(CTX->registers[SRC])
 
     /** Set the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] >> 16 << 16 | (SRC)
+#   define EX86_REGISTER_16_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0xFFFFFFFFFFFF0000 | (SRC)
+
+    /** Get the low 8-bits of the register (al, bl, etc.) */
+#   define EX86_REGISTER_8_LO_GET(CTX, SRC) (int8_t)(CTX->registers[SRC])
+
+    /** Set the low 8-bits of the register (al, bl, etc.) */
+#   define EX86_REGISTER_8_LO_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0xFFFFFFFFFFFFFF00 | (SRC)
+
+    /** Get the high 8-bits of the 16-bit register (ah, bh, etc.) */
+#   define EX86_REGISTER_8_HI_GET(CTX, SRC) (int8_t)(CTX->registers[SRC] >> 8)
+
+    /** Set the high 8-bits of the 16-bit register (ah, bh, etc.) */
+#   define EX86_REGISTER_8_HI_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0xFFFFFFFFFFFF00FF | (SRC) << 8
 
     /** Get the raw memory pointer. */
 #   define EX86_MEMORY_POINTER(CTX, POINTER) (int64_t *)((int64_t *)CTX->memory + POINTER)
@@ -82,7 +94,19 @@ typedef ptrdiff_t ex86_pointer;
 #   define EX86_REGISTER_16_GET(CTX, SRC) (int16_t)(CTX->registers[SRC])
 
     /** Set the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] >> 16 << 16 | (SRC)
+#   define EX86_REGISTER_16_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0xFFFF0000 | (SRC)
+
+    /** Get the low 8-bits of the register (al, bl, etc.) */
+#   define EX86_REGISTER_8_LO_GET(CTX, SRC) (int8_t)(CTX->registers[SRC])
+
+    /** Set the low 8-bits of the register (al, bl, etc.) */
+#   define EX86_REGISTER_8_LO_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0xFFFFFF00 | (SRC)
+
+    /** Get the high 8-bits of the 16-bit register (ah, bh, etc.) */
+#   define EX86_REGISTER_8_HI_GET(CTX, SRC) (int8_t)(CTX->registers[SRC] >> 8)
+
+    /** Set the high 8-bits of the 16-bit register (ah, bh, etc.) */
+#   define EX86_REGISTER_8_HI_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0xFFFF00FF | (SRC) << 8
 
     /** Get the raw memory pointer. */
 #   define EX86_MEMORY_POINTER(CTX, POINTER) (int32_t *)((int32_t *)CTX->memory + POINTER)
@@ -122,6 +146,18 @@ typedef ptrdiff_t ex86_pointer;
 
     /** Set the low 16-bits of the register (ax, bx, etc.) */
 #   define EX86_REGISTER_16_SET(CTX, DEST, SRC) CTX->registers[DEST] = (SRC)
+
+    /** Get the low 8-bits of the register (al, bl, etc.) */
+#   define EX86_REGISTER_8_LO_GET(CTX, SRC) (int8_t)(CTX->registers[SRC])
+
+    /** Set the low 8-bits of the register (al, bl, etc.) */
+#   define EX86_REGISTER_8_LO_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0xFF00 | (SRC)
+
+    /** Get the high 8-bits of the 16-bit register (ah, bh, etc.) */
+#   define EX86_REGISTER_8_HI_GET(CTX, SRC) (int8_t)(CTX->registers[SRC] >> 8)
+
+    /** Set the high 8-bits of the 16-bit register (ah, bh, etc.) */
+#   define EX86_REGISTER_8_HI_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] & 0x00FF | (SRC) << 8
 
     /** Get the raw memory pointer. */
 #   define EX86_MEMORY_POINTER(CTX, POINTER) (int16_t *)((int16_t *)CTX->memory + POINTER)
