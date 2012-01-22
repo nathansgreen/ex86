@@ -91,13 +91,13 @@ struct ex86_config;
 #   define EX86_MEMORY_32_SET(DEST, SRC) *DEST = (SRC)
 
     /** Get 16 bits in memory. */
-#   define EX86_MEMORY_16_GET(SRC) (*(SRC) >> 16)
+#   define EX86_MEMORY_16_GET(SRC) (int16_t)(*(SRC) >> 16)
 
     /** Set 16 bits in memory. */
 #   define EX86_MEMORY_16_SET(DEST, SRC) *DEST = (*(DEST) & 0x0000FFFF) | ((int32_t)(SRC) << 16)
 
     /** Get 8 bits in memory. */
-#   define EX86_MEMORY_8_GET(SRC) (*(SRC) >> 24)
+#   define EX86_MEMORY_8_GET(SRC) (int8_t)(*(SRC) >> 24)
 
     /** Set 8 bits in memory. */
 #   define EX86_MEMORY_8_SET(DEST, SRC) *DEST = (*(DEST) & 0x00FFFFFF) | ((int8_t)(SRC) << 24)
@@ -130,7 +130,7 @@ struct ex86_config;
 #   define EX86_MEMORY_16_SET(DEST, SRC) *DEST = (SRC)
 
     /** Get 8 bits in memory. */
-#   define EX86_MEMORY_8_GET(SRC) (*SRC >> 8)
+#   define EX86_MEMORY_8_GET(SRC) (int8_t)(*SRC >> 8)
 
     /** Set 8 bits in memory. */
 #   define EX86_MEMORY_8_SET(DEST, SRC) *DEST = (*(DEST) & 0x00FF) | ((int8_t)(SRC) << 8)

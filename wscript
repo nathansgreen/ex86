@@ -18,4 +18,4 @@ def configure(conf):
     
 def build(bld):
     bld.recurse('ex86')
-    #bld.recurse('iex86-intel')
+    bld.recurse('iex86-intel')
