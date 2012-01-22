@@ -128,10 +128,7 @@ EX86_INSTRUCTION(mov64_m_m) {
 static ex86_instruction_candidates lookup[EX86_MAX_ISA_8086_OP] = {
     [EX86_ISA_8086_OP_NOP    ][EX86_TARGET_NONE        ][EX86_TARGET_NONE        ][EX86_TARGET_NONE        ] = &nop,
     [EX86_ISA_8086_OP_ADD    ][EX86_TARGET_MEMORY_8    ][EX86_TARGET_IMMEDIATE_8 ][EX86_TARGET_NONE        ] = &add8_m_i,
-<<<<<<< HEAD
-=======
     [EX86_ISA_8086_OP_ADD    ][EX86_TARGET_REGISTER_8  ][EX86_TARGET_REGISTER_8  ][EX86_TARGET_NONE        ] = &add8_r_r,
->>>>>>> 1aab87610b9513c1f14e5c284dd82fa5f4b8af30
 
     [EX86_ISA_8086_OP_MOV    ][EX86_TARGET_MEMORY_8    ][EX86_TARGET_IMMEDIATE_8 ][EX86_TARGET_NONE        ] = &mov8_m_i,
     [EX86_ISA_8086_OP_MOV    ][EX86_TARGET_MEMORY_8    ][EX86_TARGET_MEMORY_8    ][EX86_TARGET_NONE        ] = &mov8_m_m,
