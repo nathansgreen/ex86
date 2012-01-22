@@ -55,7 +55,7 @@ typedef ptrdiff_t ex86_pointer;
 #   define EX86_MEMORY_8_GET(CTX, SRC) (int8_t)(*EX86_MEMORY_POINTER(CTX, SRC) >> 56)
 
     /** Set 8 bits in memory. */
-#   define EX86_MEMORY_8_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, DEST) = (*EX86_MEMORY_POINTER(CTX, DEST) & 0x00FFFFFFFFFFFFFFF) | ((int8_t)(SRC) << 56)
+#   define EX86_MEMORY_8_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, DEST) = (*EX86_MEMORY_POINTER(CTX, DEST) & 0x00FFFFFFFFFFFFFF) | ((int8_t)(SRC) << 56)
 
     /** An immediate value. */
     typedef int64_t ex86_immediate;
