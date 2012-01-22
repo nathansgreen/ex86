@@ -10,15 +10,6 @@
 EX86_INSTRUCTION(nop) {
 }
 
-/** add */
-EX86_INSTRUCTION(add8_m_i) {
-    EX86_REGISTER_8_SET(dest.r, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(src1.i));
-}
-
-EX86_INSTRUCTION(add8_r_r) {
-    EX86_REGISTER_8_SET(dest.r, EX86_REGISTER_8_GET(dest.r) + EX86_REGISTER_8_GET(src.r));
-}
-
 /** mov8 memory, immediate */
 EX86_INSTRUCTION(mov8_m_i) {
     EX86_MEMORY_8_SET(dest.p, EX86_IMMEDIATE_8(src1.i));
@@ -127,8 +118,6 @@ EX86_INSTRUCTION(mov64_m_m) {
 
 static ex86_instruction_candidates lookup[EX86_MAX_ISA_8086_OP] = {
     [EX86_ISA_8086_OP_NOP    ][EX86_TARGET_NONE        ][EX86_TARGET_NONE        ][EX86_TARGET_NONE        ] = &nop,
-    [EX86_ISA_8086_OP_ADD    ][EX86_TARGET_MEMORY_8    ][EX86_TARGET_IMMEDIATE_8 ][EX86_TARGET_NONE        ] = &add8_m_i,
-    [EX86_ISA_8086_OP_ADD    ][EX86_TARGET_REGISTER_8  ][EX86_TARGET_REGISTER_8  ][EX86_TARGET_NONE        ] = &add8_r_r,
 
     [EX86_ISA_8086_OP_MOV    ][EX86_TARGET_MEMORY_8    ][EX86_TARGET_IMMEDIATE_8 ][EX86_TARGET_NONE        ] = &mov8_m_i,
     [EX86_ISA_8086_OP_MOV    ][EX86_TARGET_MEMORY_8    ][EX86_TARGET_MEMORY_8    ][EX86_TARGET_NONE        ] = &mov8_m_m,
