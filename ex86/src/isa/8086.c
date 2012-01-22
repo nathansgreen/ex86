@@ -12,107 +12,107 @@ EX86_INSTRUCTION(nop) {
 
 /** mov8 memory, immediate */
 EX86_INSTRUCTION(mov8_m_i) {
-    EX86_MEMORY_8_SET(dest.p, EX86_IMMEDIATE_8(src1.i));
+    EX86_MEMORY_8_SET(ctx, dest.p, EX86_IMMEDIATE_8(src1.i));
 }
 
 /** mov8 memory, memory */
 EX86_INSTRUCTION(mov8_m_m) {
-    EX86_MEMORY_8_SET(dest.p, EX86_MEMORY_8_GET(src1.p));
+    EX86_MEMORY_8_SET(ctx, dest.p, EX86_MEMORY_8_GET(ctx, src1.p));
 }
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 16
 /** mov16 register, register */
 EX86_INSTRUCTION(mov16_r_r) {
-    EX86_REGISTER_16_SET(dest.r, EX86_REGISTER_16_GET(src1.r));
+    EX86_REGISTER_16_SET(ctx, dest.r, EX86_REGISTER_16_GET(ctx, src1.r));
 }
 
 /** mov16 register, immediate */
 EX86_INSTRUCTION(mov16_r_i) {
-    EX86_REGISTER_16_SET(dest.r, EX86_IMMEDIATE_16(src1.i));
+    EX86_REGISTER_16_SET(ctx, dest.r, EX86_IMMEDIATE_16(src1.i));
 }
 
 /** mov16 memory, immediate */
 EX86_INSTRUCTION(mov16_m_i) {
-    EX86_MEMORY_16_SET(dest.p, EX86_IMMEDIATE_16(src1.i));
+    EX86_MEMORY_16_SET(ctx, dest.p, EX86_IMMEDIATE_16(src1.i));
 }
 
 /** mov16 register, memory */
 EX86_INSTRUCTION(mov16_r_m) {
-    EX86_REGISTER_16_SET(dest.r, EX86_MEMORY_16_GET(dest.p));
+    EX86_REGISTER_16_SET(ctx, dest.r, EX86_MEMORY_16_GET(ctx, dest.p));
 }
 
 /** mov16 memory, register */
 EX86_INSTRUCTION(mov16_m_r) {
-    EX86_MEMORY_16_SET(dest.p, EX86_REGISTER_16_GET(dest.r));
+    EX86_MEMORY_16_SET(ctx, dest.p, EX86_REGISTER_16_GET(ctx, dest.r));
 }
 
 /** mov16 memory, memory */
 EX86_INSTRUCTION(mov16_m_m) {
-    EX86_MEMORY_16_SET(dest.p, EX86_MEMORY_16_GET(dest.p));
+    EX86_MEMORY_16_SET(ctx, dest.p, EX86_MEMORY_16_GET(ctx, dest.p));
 }
 #endif
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 32
 /** mov32 register, register */
 EX86_INSTRUCTION(mov32_r_r) {
-    EX86_REGISTER_32_SET(dest.r, EX86_REGISTER_32_GET(src1.r));
+    EX86_REGISTER_32_SET(ctx, dest.r, EX86_REGISTER_32_GET(ctx, src1.r));
 }
 
 /** mov32 register, immediate */
 EX86_INSTRUCTION(mov32_r_i) {
-    EX86_REGISTER_32_SET(dest.r, EX86_IMMEDIATE_32(src1.i));
+    EX86_REGISTER_32_SET(ctx, dest.r, EX86_IMMEDIATE_32(src1.i));
 }
 
 /** mov32 memory, immediate */
 EX86_INSTRUCTION(mov32_m_i) {
-    EX86_MEMORY_32_SET(dest.p, EX86_IMMEDIATE_32(src1.i));
+    EX86_MEMORY_32_SET(ctx, dest.p, EX86_IMMEDIATE_32(src1.i));
 }
 
 /** mov32 register, memory */
 EX86_INSTRUCTION(mov32_r_m) {
-    EX86_REGISTER_32_SET(dest.r, EX86_MEMORY_32_GET(dest.p));
+    EX86_REGISTER_32_SET(ctx, dest.r, EX86_MEMORY_32_GET(ctx, dest.p));
 }
 
 /** mov32 memory, register */
 EX86_INSTRUCTION(mov32_m_r) {
-    EX86_MEMORY_32_SET(dest.p, EX86_REGISTER_32_GET(dest.r));
+    EX86_MEMORY_32_SET(ctx, dest.p, EX86_REGISTER_32_GET(ctx, dest.r));
 }
 
 /** mov32 memory, memory */
 EX86_INSTRUCTION(mov32_m_m) {
-    EX86_MEMORY_32_SET(dest.p, EX86_MEMORY_32_GET(dest.p));
+    EX86_MEMORY_32_SET(ctx, dest.p, EX86_MEMORY_32_GET(ctx, dest.p));
 }
 #endif
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE >= 64
 /** mov64 register, register */
 EX86_INSTRUCTION(mov64_r_r) {
-    EX86_REGISTER_64_SET(dest.r, EX86_REGISTER_64_GET(src1.r));
+    EX86_REGISTER_64_SET(ctx, dest.r, EX86_REGISTER_64_GET(ctx, src1.r));
 }
 
 /** mov64 register, immediate */
 EX86_INSTRUCTION(mov64_r_i) {
-    EX86_REGISTER_64_SET(dest.r, EX86_IMMEDIATE_64(src1.i));
+    EX86_REGISTER_64_SET(ctx, dest.r, EX86_IMMEDIATE_64(src1.i));
 }
 
 /** mov64 memory, immediate */
 EX86_INSTRUCTION(mov64_m_i) {
-    EX86_MEMORY_64_SET(dest.p, EX86_IMMEDIATE_64(src1.i));
+    EX86_MEMORY_64_SET(ctx, dest.p, EX86_IMMEDIATE_64(src1.i));
 }
 
 /** mov64 register, memory */
 EX86_INSTRUCTION(mov64_r_m) {
-    EX86_REGISTER_64_SET(dest.r, EX86_MEMORY_64_GET(dest.p));
+    EX86_REGISTER_64_SET(ctx, dest.r, EX86_MEMORY_64_GET(ctx, dest.p));
 }
 
 /** mov64 memory, register */
 EX86_INSTRUCTION(mov64_m_r) {
-    EX86_MEMORY_64_SET(dest.p, EX86_REGISTER_64_GET(dest.r));
+    EX86_MEMORY_64_SET(ctx, dest.p, EX86_REGISTER_64_GET(ctx, dest.r));
 }
 
 /** mov64 memory, memory */
 EX86_INSTRUCTION(mov64_m_m) {
-    EX86_MEMORY_64_SET(dest.p, EX86_MEMORY_64_GET(dest.p));
+    EX86_MEMORY_64_SET(ctx, dest.p, EX86_MEMORY_64_GET(ctx, dest.p));
 }
 #endif
 

@@ -3,7 +3,7 @@ from waflib.TaskGen import extension
 
 class ragel(Task.Task):
     color   = 'BLUE'
-    run_str = '${RAGEL} -o ${TGT[0].name} -C ${SRC[0].abspath()}'
+    run_str = '${RAGEL} ${RAGELFLAGS} -o ${TGT[0].name} ${SRC[0].abspath()}'
     ext_out = ['.c'] # just to make sure
 
 @extension('.rl')
@@ -15,3 +15,4 @@ def ragel(self, node):
 
 def configure(conf):
     conf.find_program('ragel', var='RAGEL', mandatory=True)
+    conf.env['RAGELFLAGS'] = []

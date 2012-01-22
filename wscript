@@ -15,6 +15,7 @@ def configure(conf):
     conf.env['CFLAGS'] += [ '-DNDEBUG', '-DREGISTER_SIZE=16', '-DISA_8086',
                             '-Wall', '-Werror', '-Wfatal-errors', '-pedantic',
                             '-std=c99']
+    conf.env['RAGELFLAGS'] += [ '-C', '-G2' ]
     
 def build(bld):
     bld.recurse('ex86')

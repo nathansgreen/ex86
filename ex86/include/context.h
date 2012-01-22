@@ -2,57 +2,60 @@
 #define CONTEXT_H_
 
 #include <stdint.h>
+#include <stddef.h>
 
 struct ex86_config;
+
+typedef ptrdiff_t ex86_pointer;
 
 #if defined(REGISTER_SIZE) && REGISTER_SIZE == 64
     /** A register value. */
     typedef int64_t ex86_register_value;
 
     /** Get the low 64-bits of the register (rax, rbx, etc.) */
-#   define EX86_REGISTER_64_GET(SRC) *(SRC)
+#   define EX86_REGISTER_64_GET(CTX, SRC) CTX->registers[(SRC)]
 
     /** Set the low 64-bits of the register (rax, rbx, etc.) */
-#   define EX86_REGISTER_64_SET(DEST, SRC) *DEST = (SRC)
+#   define EX86_REGISTER_64_SET(CTX, DEST, SRC) CTX->registers[DEST] = (SRC)
 
     /** Get the low 32-bits of the register (eax, ebx, etc.) */
-#   define EX86_REGISTER_32_GET(SRC) (int32_t)(*(SRC))
+#   define EX86_REGISTER_32_GET(CTX, SRC) (int32_t)(CTX->registers[SRC])
 
     /** Set the low 32-bits of the register (eax, ebx, etc.) */
-#   define EX86_REGISTER_32_SET(DEST, SRC) *DEST = *(DEST) >> 32 << 32 | (SRC)
+#   define EX86_REGISTER_32_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] >> 32 << 32 | (SRC)
 
     /** Get the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_GET(SRC) (int16_t)(*(SRC))
+#   define EX86_REGISTER_16_GET(CTX, SRC) (int16_t)(CTX->registers[SRC])
 
     /** Set the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_SET(DEST, SRC) *DEST = *(DEST) >> 16 << 16 | (SRC)
+#   define EX86_REGISTER_16_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] >> 16 << 16 | (SRC)
 
-    /** A pointer to a value in memory. */
-    typedef int64_t *ex86_pointer;
+    /** Get the raw memory pointer. */
+#   define EX86_MEMORY_POINTER(CTX, POINTER) (int64_t *)((int64_t *)CTX->memory + POINTER)
 
     /** Get 64 bits in memory. */
-#   define EX86_MEMORY_64_GET(SRC) *(SRC)
+#   define EX86_MEMORY_64_GET(CTX, SRC) *EX86_MEMORY_POINTER(CTX, SRC)
 
     /** Set 64 bits in memory. */
-#   define EX86_MEMORY_64_SET(DEST, SRC) *DEST = (SRC)
+#   define EX86_MEMORY_64_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, DEST) = (SRC)
 
     /** Get 32 bits in memory. */
-#   define EX86_MEMORY_32_GET(SRC) (int32_t)(*(SRC) >> 32)
+#   define EX86_MEMORY_32_GET(CTX, SRC) (int32_t)(*EX86_MEMORY_POINTER(CTX, SRC) >> 32)
 
     /** Set 32 bits in memory. */
-#   define EX86_MEMORY_32_SET(DEST, SRC) *DEST = (*(DEST) & 0x00000000FFFFFFFF) | ((int32_t)(SRC) << 32)
+#   define EX86_MEMORY_32_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, DEST) = (*EX86_MEMORY_POINTER(CTX, DEST) & 0x00000000FFFFFFFF) | ((int32_t)(SRC) << 32)
 
     /** Get 16 bits in memory. */
-#   define EX86_MEMORY_16_GET(SRC) (int16_t)(*(SRC) >> 48)
+#   define EX86_MEMORY_16_GET(CTX, SRC) (int16_t)(*EX86_MEMORY_POINTER(CTX, SRC) >> 48)
 
     /** Set 16 bits in memory. */
-#   define EX86_MEMORY_16_SET(DEST, SRC) *DEST = (*(DEST) & 0x0000FFFFFFFFFFFF) | ((int16_t)(SRC) << 48)
+#   define EX86_MEMORY_16_SET(CTX, DEST, SRC) *(int64_t)(CTX->memory + DEST) = (*EX86_MEMORY_POINTER(CTX, DEST) & 0x0000FFFFFFFFFFFF) | ((int16_t)(SRC) << 48)
 
     /** Get 8 bits in memory. */
-#   define EX86_MEMORY_8_GET(SRC) (int8_t)(*(SRC) >> 56)
+#   define EX86_MEMORY_8_GET(CTX, SRC) (int8_t)(*EX86_MEMORY_POINTER(CTX, SRC) >> 56)
 
     /** Set 8 bits in memory. */
-#   define EX86_MEMORY_8_SET(DEST, SRC) *DEST = (*(DEST) & 0x00FFFFFFFFFFFFFFF) | ((int8_t)(SRC) << 56)
+#   define EX86_MEMORY_8_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, DEST) = (*EX86_MEMORY_POINTER(CTX, DEST) & 0x00FFFFFFFFFFFFFFF) | ((int8_t)(SRC) << 56)
 
     /** An immediate value. */
     typedef int64_t ex86_immediate;
@@ -70,37 +73,37 @@ struct ex86_config;
     typedef int32_t ex86_register_value;
 
     /** Get the low 32-bits of the register (eax, ebx, etc.) */
-#   define EX86_REGISTER_32_GET(SRC) *(SRC)
+#   define EX86_REGISTER_32_GET(CTX, SRC) CTX->registers[SRC]
 
     /** Set the low 32-bits of the register (eax, ebx, etc.) */
-#   define EX86_REGISTER_32_SET(DEST, SRC) *DEST = (SRC)
+#   define EX86_REGISTER_32_SET(CTX, DEST, SRC) CTX->registers[DEST] = (SRC)
 
     /** Get the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_GET(SRC) (int16_t)(*(SRC))
+#   define EX86_REGISTER_16_GET(CTX, SRC) (int16_t)(CTX->registers[SRC])
 
     /** Set the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_SET(DEST, SRC) *DEST = *(DEST) >> 16 << 16 | (SRC)
+#   define EX86_REGISTER_16_SET(CTX, DEST, SRC) CTX->registers[DEST] = CTX->registers[DEST] >> 16 << 16 | (SRC)
 
-    /** A pointer to a value in memory. */
-    typedef int32_t *ex86_pointer;
+    /** Get the raw memory pointer. */
+#   define EX86_MEMORY_POINTER(CTX, POINTER) (int32_t *)((int32_t *)CTX->memory + POINTER)
 
     /** Get 32 bits in memory. */
-#   define EX86_MEMORY_32_GET(SRC) *(SRC)
+#   define EX86_MEMORY_32_GET(CTX, SRC) *EX86_MEMORY_POINTER(CTX, SRC)
 
     /** Set 32 bits in memory. */
-#   define EX86_MEMORY_32_SET(DEST, SRC) *DEST = (SRC)
+#   define EX86_MEMORY_32_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, SRC) = (SRC)
 
     /** Get 16 bits in memory. */
-#   define EX86_MEMORY_16_GET(SRC) (int16_t)(*(SRC) >> 16)
+#   define EX86_MEMORY_16_GET(CTX, SRC) (int16_t)(*EX86_MEMORY_POINTER(CTX, SRC) >> 16)
 
     /** Set 16 bits in memory. */
-#   define EX86_MEMORY_16_SET(DEST, SRC) *DEST = (*(DEST) & 0x0000FFFF) | ((int32_t)(SRC) << 16)
+#   define EX86_MEMORY_16_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, DEST) = (*EX86_MEMORY_POINTER(CTX, DEST) & 0x0000FFFF) | ((int32_t)(SRC) << 16)
 
     /** Get 8 bits in memory. */
-#   define EX86_MEMORY_8_GET(SRC) (int8_t)(*(SRC) >> 24)
+#   define EX86_MEMORY_8_GET(CTX, SRC) (int8_t)(*EX86_MEMORY_POINTER(CTX, SRC) >> 24)
 
     /** Set 8 bits in memory. */
-#   define EX86_MEMORY_8_SET(DEST, SRC) *DEST = (*(DEST) & 0x00FFFFFF) | ((int8_t)(SRC) << 24)
+#   define EX86_MEMORY_8_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, SRC) = (*EX86_MEMORY_POINTER(CTX, DEST) & 0x00FFFFFF) | ((int8_t)(SRC) << 24)
 
     /** An immediate value. */
     typedef int32_t ex86_immediate;
@@ -115,25 +118,25 @@ struct ex86_config;
     typedef int16_t ex86_register_value;
 
     /** Get the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_GET(SRC) *SRC
+#   define EX86_REGISTER_16_GET(CTX, SRC) CTX->registers[SRC]
 
     /** Set the low 16-bits of the register (ax, bx, etc.) */
-#   define EX86_REGISTER_16_SET(DEST, SRC) *DEST = (SRC)
+#   define EX86_REGISTER_16_SET(CTX, DEST, SRC) CTX->registers[DEST] = (SRC)
 
-    /** A pointer to a value in memory. */
-    typedef int16_t *ex86_pointer;
+    /** Get the raw memory pointer. */
+#   define EX86_MEMORY_POINTER(CTX, POINTER) (int16_t *)((int16_t *)CTX->memory + POINTER)
 
     /** Get 16 bits in memory. */
-#   define EX86_MEMORY_16_GET(SRC) *SRC
+#   define EX86_MEMORY_16_GET(CTX, SRC) *EX86_MEMORY_POINTER(CTX, SRC)
 
     /** Set 16 bits in memory. */
-#   define EX86_MEMORY_16_SET(DEST, SRC) *DEST = (SRC)
+#   define EX86_MEMORY_16_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, DEST) = (SRC)
 
     /** Get 8 bits in memory. */
-#   define EX86_MEMORY_8_GET(SRC) (int8_t)(*SRC >> 8)
+#   define EX86_MEMORY_8_GET(CTX, SRC) (int8_t)(*EX86_MEMORY_POINTER(CTX, SRC) >> 8)
 
     /** Set 8 bits in memory. */
-#   define EX86_MEMORY_8_SET(DEST, SRC) *DEST = (*(DEST) & 0x00FF) | ((int8_t)(SRC) << 8)
+#   define EX86_MEMORY_8_SET(CTX, DEST, SRC) *EX86_MEMORY_POINTER(CTX, DEST) = (*EX86_MEMORY_POINTER(CTX, DEST) & 0x00FF) | ((int8_t)(SRC) << 8)
 
     /** An immediate value. */
     typedef int16_t ex86_immediate;
@@ -146,8 +149,6 @@ struct ex86_config;
 
 /** Convert an immediate value to 16 bits. */
 #define EX86_IMMEDIATE_8(VALUE) (int8_t)(VALUE)
-
-typedef ex86_register_value *ex86_register;
 
 /** FLAGS register. */
 typedef int ex86_flags;
@@ -197,34 +198,43 @@ typedef int ex86_flags;
 /** Nested task flag. */
 #define EX86_FLAGS_NT(FLAGS)        (FLAGS & 0x4000) // 14
 
-/** The ex86 execution context. */
-typedef struct ex86_context {
+/** Enum for context stuff. */
+typedef enum ex86_register {
     /** The accumulator register. */
-    ex86_register_value ax;
+    EX86_REGISTER_AX,
 
     /** The base register. */
-    ex86_register_value bx;
+    EX86_REGISTER_BX,
 
     /** The counter register. */
-    ex86_register_value cx;
+    EX86_REGISTER_CX,
 
     /** The data register. */
-    ex86_register_value dx;
+    EX86_REGISTER_DX,
 
     /** The source index register. */
-    ex86_register_value si;
+    EX86_REGISTER_SI,
 
     /** The destination register. */
-    ex86_register_value di;
+    EX86_REGISTER_DI,
 
     /** The base pointer register. */
-    ex86_register_value bp;
+    EX86_REGISTER_BP,
 
     /** The stack pointer register. */
-    ex86_register_value sp;
+    EX86_REGISTER_SP,
 
     /** The instruction pointer register. */
-    ex86_register_value ip;
+    EX86_REGISTER_IP,
+
+    /** Maximum register value. */
+    EX86_MAX_REGISTER
+} ex86_register;
+
+/** The ex86 execution context. */
+typedef struct ex86_context {
+    /** Registers. */
+    ex86_register_value registers[EX86_MAX_REGISTER];
 
     /** The FLAGS register. */
     ex86_flags flags;
