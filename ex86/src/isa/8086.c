@@ -12,11 +12,12 @@ EX86_INSTRUCTION(nop) {
 
 /** add */
 EX86_INSTRUCTION(add8_m_i) {
-    EX86_REGISTER_8_SET(dest.r, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(src1.i));
+    EX86_REGISTER_8_LO_SET(dest.r, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(src1.i));
 }
 
+// add al, al
 EX86_INSTRUCTION(add8_r_r) {
-    EX86_REGISTER_8_SET(dest.r, EX86_REGISTER_8_GET(dest.r) + EX86_REGISTER_8_GET(src.r));
+    EX86_REGISTER_8_LO_SET(dest.r, EX86_REGISTER_8_LO_GET(dest.r) + EX86_REGISTER_8_LO_GET(src.r));
 }
 
 /** mov8 memory, immediate */
