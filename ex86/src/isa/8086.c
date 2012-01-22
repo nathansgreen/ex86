@@ -11,8 +11,9 @@ EX86_INSTRUCTION(nop) {
 }
 
 /** add */
+// add [pointer], 10
 EX86_INSTRUCTION(add8_m_i) {
-    EX86_REGISTER_8_LO_SET(dest.r, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(src1.i));
+    EX86_MEMORY_8_SET(dest.r, EX86_MEMORY_8_GET(dest.p) + EX86_IMMEDIATE_8(src1.i));
 }
 
 // add al, al

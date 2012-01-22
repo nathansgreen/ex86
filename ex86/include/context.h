@@ -144,8 +144,8 @@ struct ex86_config;
 #   error "REGISTER_SIZE not specified or invalid"
 #endif
 
-#define EX86_REGISTER_8_LO_GET(src) *src & 0x00FF
-#define EX86_REGISTER_8_LO_GET(src) *src & 0xFF00
+#define EX86_REGISTER_8_HI_GET(SRC) (int8_t)(*(SRC) >> 8)
+#define EX86_REGISTER_8_LO_GET(src) (int8_t)(*(SRC))
 
 /** Convert an immediate value to 16 bits. */
 #define EX86_IMMEDIATE_8(VALUE) (int8_t)(VALUE)
